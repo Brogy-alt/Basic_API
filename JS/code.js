@@ -14,7 +14,7 @@
 //         return item.id == 1
 //     })
 //     console.table(record)
-    
+
 // })
 
 // let data = [ 9, 12, "Thando", 26, 8, 1];
@@ -29,7 +29,7 @@
 // // filter displays what you select should be displayed
 // console.log(data.filter(Number))
 
-// displays the data type 
+// displays the data type
 // for(let d of data){
 //     if(typeof d != "string")
 //     console.log(d);
@@ -70,13 +70,27 @@
 // data.splice(2, 2,);
 // console.log(data);
 
+// row
+let wrapper = document.querySelector(".wrapper");
+
 // the same as fetch but less coding
 async function fetchData() {
-    let res = await fetch("../Data/data.json");
-    let data = await res.json();
-    console.log(data.results);
-};
-
-
-
-
+  let res = await fetch("https://randomuser.me/api?results=7");
+  let data = await res.json();
+  return data.results;
+}
+(async function display() {
+  let data = await fetchData();
+  data.forEach((item) => {
+    console.log(item);
+    wrapper.innerHTML += `
+        <div class="card" style="width: 18rem;">
+        <img src="${item.picture.large}" class="card-img-top" alt="${item}">
+        <div class="card-body">
+          <h5 class="card-title">${item.name.first}${item.name.last}</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>`;
+  });
+})();
